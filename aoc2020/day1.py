@@ -2,7 +2,7 @@ import pathlib
 
 
 def solve():
-    data_path = pathlib.Path(__file__).parent.parent / "data/day1_1/input.txt"
+    data_path = pathlib.Path(__file__).parent.parent / "data/day1.txt"
     with data_path.open() as in_stream:
         data = read(in_stream)
     a, b = search_double(data, total=2020)
