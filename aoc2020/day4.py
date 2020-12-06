@@ -26,34 +26,40 @@ def is_literal_range(literal: str, min: int, max: int) -> bool:
         return min <= value <= max
 
 
+PASSPORT_PREDICATES = {
+    # byr (Birth Year) - four digits; at least 1920 and at most 2002.
+    "byr": lambda value: is_literal_range(value, 1920, 2002),
+    # iyr (Issue Year) - four digits; at least 2010 and at most 2020.
+    "iyr": lambda value: is_literal_range(value, 2010, 2020),
+    # eyr (Expiration Year) - four digits; at least 2020 and at most 2030.
+    "eyr": lambda value: is_literal_range(value, 2020, 2030),
+    # hgt (Height) - a number followed by either cm or in:
+    "hgt": lambda value: (
+        lambda digits, unit:
+            # If cm, the number must be at least 150 and at most 193.
+            is_literal_range(digits, 150, 193) if unit == "cm" else
+            # If in, the number must be at least 59 and at most 76.
+            is_literal_range(digits, 59, 76) if unit == "in" else
+            False
+        )(value[:-2], value[-2:]),
+    # hcl (Hair Color) - a # followed by exactly six characters 0-9 or a-f.
+    "hcl": lambda value: (
+            len(value) == 7
+            and value.startswith("#")
+            and set(value[1:]) <= {*"0123456789abcdef"}
+    ),
+    # ecl (Eye Color) - exactly one of: amb blu brn gry grn hzl oth.
+    "ecl": lambda value: value in {"amb", "blu", "brn", "gry", "grn", "hzl", "oth"},
+    # pid (Passport ID) - a nine-digit number, including leading zeroes.
+    "pid": lambda value: len(value) == 9 and is_literal_range(value, 0, 999999999),
+}
+
+
 def is_valid(passport: Dict[str, str]):
     assert is_complete(passport), "only check complete passports for validity"
-    # TODO: Having a dict of {key: predicate} would be more idiomatic
-    return (
-        # byr (Birth Year) - four digits; at least 1920 and at most 2002.
-        is_literal_range(passport["byr"], 1920, 2002) and
-        # iyr (Issue Year) - four digits; at least 2010 and at most 2020.
-        is_literal_range(passport["iyr"], 2010, 2020) and
-        # eyr (Expiration Year) - four digits; at least 2020 and at most 2030.
-        is_literal_range(passport["eyr"], 2020, 2030) and
-        # hgt (Height) - a number followed by either cm or in:
-        (
-            lambda digits, unit:
-                # If cm, the number must be at least 150 and at most 193.
-                is_literal_range(digits, 150, 193) if unit == "cm" else
-                # If in, the number must be at least 59 and at most 76.
-                is_literal_range(digits, 59, 76) if unit == "in" else
-                False
-        )(passport["hgt"][:-2], passport["hgt"][-2:]) and
-        # hcl (Hair Color) - a # followed by exactly six characters 0-9 or a-f.
-        len(passport["hcl"]) == 7 and
-        passport["hcl"].startswith("#") and
-        set(passport["hcl"][1:]) <= {*"0123456789abcdef"} and
-        # ecl (Eye Color) - exactly one of: amb blu brn gry grn hzl oth.
-        passport["ecl"] in {"amb", "blu", "brn", "gry", "grn", "hzl", "oth"} and
-        # pid (Passport ID) - a nine-digit number, including leading zeroes.
-        len(passport["pid"]) == 9 and
-        is_literal_range(passport["pid"], 0, 999999999)
+    return all(
+        predicate(passport[key])
+        for key, predicate in PASSPORT_PREDICATES.items()
     )
 
 
