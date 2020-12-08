@@ -1,4 +1,4 @@
-from typing import NamedTuple, Literal, get_args, List, Tuple
+from typing import NamedTuple, Literal, get_args, List, Tuple, Iterable
 import pathlib
 
 
@@ -51,7 +51,7 @@ def run_once(instructions: List[Instruction]) -> Tuple[int, bool]:
     return total, pointer >= len(instructions)
 
 
-def swap_instructions(instructions: List[Instruction]) -> List[Instruction]:
+def swap_instructions(instructions: List[Instruction]) -> Iterable[List[Instruction]]:
     """Generate new `instructions` by swapping each JMP/NOP instruction once"""
     for index in reversed(range(len(instructions))):
         instruction = instructions[index]
