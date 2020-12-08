@@ -6,6 +6,7 @@ from . import day4
 from . import day5
 from . import day6
 from . import day7
+from . import day8
 
 SOLUTIONS = {
     1: day1.solve,
@@ -15,12 +16,13 @@ SOLUTIONS = {
     5: day5.solve,
     6: day6.solve,
     7: day7.solve,
+    8: day8.solve,
 }
 
 CLI = argparse.ArgumentParser()
 CLI.add_argument(
     'DAY',
-    default=7,
+    default=8,
     nargs='?',
     type=int,
     choices=list(SOLUTIONS)
