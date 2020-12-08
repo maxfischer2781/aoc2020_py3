@@ -9,14 +9,11 @@ from . import day7
 from . import day8
 
 SOLUTIONS = {
-    1: day1.solve,
-    2: day2.solve,
-    3: day3.solve,
-    4: day4.solve,
-    5: day5.solve,
-    6: day6.solve,
-    7: day7.solve,
-    8: day8.solve,
+    index: module.solve
+    for index, module in enumerate(
+        (day1, day2, day3, day4, day5, day6, day7, day8),
+        start=1,
+    )
 }
 
 CLI = argparse.ArgumentParser()
