@@ -22,26 +22,31 @@ SOLUTIONS = {
 
 def format_duration(delta: float):
     symbol = 's'
-    for i, symbol in enumerate(("us", "ms", "ns"), start=1):
-        if delta > (10**(-3*i + 1)):
+    for i, symbol in enumerate(("s", "ms", "μs", "ns"), start=1):
+        if delta > (10**(-3*i + 2)):
             break
         delta = delta * 1000
     return f"{delta:.2f} {symbol}"
 
 
+def run_solution(day: int):
+    print(f"[> ### Day {day:3d} ### <]")
+    solver = SOLUTIONS[day]
+    pre = time.time()
+    solver()
+    end = time.time()
+    print(f"[> Elapsed {format_duration(end-pre)} <]")
+
+
 CLI = argparse.ArgumentParser()
 CLI.add_argument(
     'DAY',
-    default=max(SOLUTIONS),
-    nargs='?',
+    default=[],
+    nargs='*',
     type=int,
-    choices=list(SOLUTIONS)
 )
 
 opts = CLI.parse_args()
-solver = SOLUTIONS[opts.DAY]
-pre = time.time()
-solver()
-end = time.time()
-
-print(f"[Elapsed {format_duration(end-pre)}]")
+for d in opts.DAY or [max(SOLUTIONS)]:
+    assert d in SOLUTIONS, f"days {', '.join(map(str, SOLUTIONS))} available, not {d}"
+    run_solution(d)
