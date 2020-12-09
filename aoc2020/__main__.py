@@ -1,4 +1,6 @@
 import argparse
+import time
+
 from . import day1
 from . import day2
 from . import day3
@@ -17,6 +19,16 @@ SOLUTIONS = {
     )
 }
 
+
+def format_duration(delta: float):
+    symbol = 's'
+    for i, symbol in enumerate(("us", "ms", "ns"), start=1):
+        if delta > (10**(-3*i + 1)):
+            break
+        delta = delta * 1000
+    return f"{delta:.2f} {symbol}"
+
+
 CLI = argparse.ArgumentParser()
 CLI.add_argument(
     'DAY',
@@ -27,4 +39,9 @@ CLI.add_argument(
 )
 
 opts = CLI.parse_args()
-SOLUTIONS[opts.DAY]()
+solver = SOLUTIONS[opts.DAY]
+pre = time.time()
+solver()
+end = time.time()
+
+print(f"[Elapsed {format_duration(end-pre)}]")
