@@ -10,11 +10,12 @@ from . import day6
 from . import day7
 from . import day8
 from . import day9
+from . import day10
 
 SOLUTIONS = {
     index: module.solve
     for index, module in enumerate(
-        (day1, day2, day3, day4, day5, day6, day7, day8, day9),
+        (day1, day2, day3, day4, day5, day6, day7, day8, day9, day10),
         start=1,
     )
 }
