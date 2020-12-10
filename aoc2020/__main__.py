@@ -21,9 +21,8 @@ SOLUTIONS = {
 
 
 def format_duration(delta: float):
-    symbol = 's'
-    for i, symbol in enumerate(("s", "ms", "μs", "ns"), start=1):
-        if delta > (10**(-3*i + 2)):
+    for symbol in ("s", "ms", "μs", "ns"):
+        if delta > 0.5:
             break
         delta = delta * 1000
     return f"{delta:.2f} {symbol}"
