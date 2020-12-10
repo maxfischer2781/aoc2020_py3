@@ -1,11 +1,8 @@
 from typing import NamedTuple, Literal, get_args, List, Tuple, Iterable
-import pathlib
 
 
-def solve():
-    data_path = pathlib.Path(__file__).parent.parent / "data/day8.txt"
-    with data_path.open() as in_stream:
-        instructions = [Instruction.from_str(line) for line in in_stream]
+def solve(in_stream):
+    instructions = [Instruction.from_str(line) for line in in_stream]
     print("Default Acc", run_once(instructions)[0])
     for new_instructions in swap_instructions(instructions):
         total, proper = run_once(new_instructions)

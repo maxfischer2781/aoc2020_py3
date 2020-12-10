@@ -1,11 +1,8 @@
 from typing import Iterable, Dict
-import pathlib
 
 
-def solve():
-    data_path = pathlib.Path(__file__).parent.parent / "data/day4.txt"
-    with data_path.open() as in_stream:
-        data = list(read_passports(in_stream))
+def solve(in_stream):
+    data = list(read_passports(in_stream))
     complete_passports = [passport for passport in data if is_complete(passport)]
     print(f"No compl {len(complete_passports)}")
     valid_passports = [passport for passport in complete_passports if is_valid(passport)]

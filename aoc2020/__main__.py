@@ -1,5 +1,7 @@
 import argparse
 import time
+import pathlib
+import io
 
 from . import day1
 from . import day2
@@ -31,9 +33,11 @@ def format_duration(delta: float):
 
 def run_solution(day: int):
     print(f"[> ### Day {day:3d} ### <]")
+    input_path = pathlib.Path(__file__).parent.parent / 'data' / f'day{day}.txt'
+    data = io.StringIO(input_path.read_text())
     solver = SOLUTIONS[day]
     pre = time.time()
-    solver()
+    solver(data)
     end = time.time()
     print(f"[> Elapsed {format_duration(end-pre)} <]")
 

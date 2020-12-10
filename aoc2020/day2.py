@@ -1,11 +1,8 @@
 from typing import NamedTuple
-import pathlib
 
 
-def solve():
-    data_path = pathlib.Path(__file__).parent.parent / "data/day2.txt"
-    with data_path.open() as in_stream:
-        data = [PolicyPassword.from_str(line) for line in in_stream]
+def solve(in_stream):
+    data = [PolicyPassword.from_str(line) for line in in_stream]
     print(f"Range count {sum(pw.in_range() for pw in data)}")
     print(f"Index count {sum(pw.in_position() for pw in data)}")
 

@@ -1,12 +1,9 @@
 from typing import Iterable
-import pathlib
 
 
-def solve():
-    data_path = pathlib.Path(__file__).parent.parent / "data/day6.txt"
-    with data_path.open() as in_stream:
-        # frozenset instead of set to avoid mutation by collecting sets
-        questionnaires = [frozenset(line.strip()) for line in in_stream]
+def solve(in_stream):
+    # frozenset instead of set to avoid mutation by collecting sets
+    questionnaires = [frozenset(line.strip()) for line in in_stream]
     groups_any = list(merge_groups(questionnaires, overlap=False))
     print("Group sum any", sum(map(len, groups_any)))
     groups_all = list(merge_groups(questionnaires, overlap=True))

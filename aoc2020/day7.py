@@ -1,14 +1,11 @@
-from typing import Dict, Tuple, List, Optional
-import pathlib
+from typing import Dict, Tuple, List
 import re
 
 
-def solve():
-    data_path = pathlib.Path(__file__).parent.parent / "data/day7.txt"
-    with data_path.open() as in_stream:
-        color_contains = {
-            color: contains for color, contains in map(parse_bag_spec, in_stream)
-        }
+def solve(in_stream):
+    color_contains = {
+        color: contains for color, contains in map(parse_bag_spec, in_stream)
+    }
     color_containing = inverse_contains(color_contains)
     print("Unique parents", unique_containing(color_containing, "shiny gold"))
     print("Total children", total_contained(color_contains, "shiny gold") - 1)

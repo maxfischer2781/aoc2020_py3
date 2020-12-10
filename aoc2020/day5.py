@@ -1,11 +1,8 @@
 from typing import NamedTuple, Iterable, Tuple, TypeVar
-import pathlib
 
 
-def solve():
-    data_path = pathlib.Path(__file__).parent.parent / "data/day5.txt"
-    with data_path.open() as in_stream:
-        seats = [Seat.from_str(line.strip()) for line in in_stream]
+def solve(in_stream):
+    seats = [Seat.from_str(line.strip()) for line in in_stream]
     seats.sort(key=lambda seat: seat.id)
     print(f"Max seat id {seats[-1].id}")
     for prev, next in pairwise(seats):

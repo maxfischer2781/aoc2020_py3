@@ -1,13 +1,10 @@
 from typing import List
-import pathlib
 from functools import reduce
 from operator import mul
 
 
-def solve():
-    data_path = pathlib.Path(__file__).parent.parent / "data/day10.txt"
-    with data_path.open() as in_stream:
-        connectors = [int(line) for line in in_stream]
+def solve(in_stream):
+    connectors = [int(line) for line in in_stream]
     steps = shortest_steps(connectors)
     step_counts = count(steps)
     print("Differences", step_counts[0] * step_counts[1])

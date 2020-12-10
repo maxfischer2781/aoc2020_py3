@@ -1,10 +1,5 @@
-import pathlib
-
-
-def solve():
-    data_path = pathlib.Path(__file__).parent.parent / "data/day1.txt"
-    with data_path.open() as in_stream:
-        data = read(in_stream)
+def solve(in_stream):
+    data = read(in_stream)
     a, b = search_double(data, total=2020)
     print(f"{a} * {b} = {a * b}")
     a, b, c = search_triple(data, total=2020)

@@ -1,15 +1,12 @@
 from typing import Iterable, TypeVar, Tuple
-import pathlib
 from itertools import islice
 from collections import deque
 
 T = TypeVar('T')
 
 
-def solve():
-    data_path = pathlib.Path(__file__).parent.parent / "data/day9.txt"
-    with data_path.open() as in_stream:
-        series = [int(line) for line in in_stream]
+def solve(in_stream):
+    series = [int(line) for line in in_stream]
     outlier = find_nonsum(series, 25)
     print("Window sum outlier:", outlier)
     sum_min, sum_max = find_sum(series, total=outlier)

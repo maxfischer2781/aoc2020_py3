@@ -1,11 +1,8 @@
-import pathlib
 from functools import reduce
 
 
-def solve():
-    data_path = pathlib.Path(__file__).parent.parent / "data/day3.txt"
-    with data_path.open() as in_stream:
-        data = [MapLine.from_str(line) for line in in_stream]
+def solve(in_stream):
+    data = [MapLine.from_str(line) for line in in_stream]
     print("Hits simple", sum_slope(data, 3, 1))
     slopes = [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]
     slope_hits = [sum_slope(data, *slope) for slope in slopes]
