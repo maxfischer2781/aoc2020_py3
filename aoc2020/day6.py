@@ -1,13 +1,18 @@
 from typing import Iterable
 
 
+FORMAT = """
+Group sum any: {0}
+Group sum all: {1}
+"""
+
+
 def solve(in_stream):
     # frozenset instead of set to avoid mutation by collecting sets
     questionnaires = [frozenset(line.strip()) for line in in_stream]
     groups_any = list(merge_groups(questionnaires, overlap=False))
-    print("Group sum any", sum(map(len, groups_any)))
     groups_all = list(merge_groups(questionnaires, overlap=True))
-    print("Group sum all", sum(map(len, groups_all)))
+    return sum(map(len, groups_any)), sum(map(len, groups_all))
 
 
 def merge_groups(questionnaires: Iterable[set], overlap: bool) -> Iterable[set]:

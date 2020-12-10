@@ -1,13 +1,17 @@
 from typing import NamedTuple, Iterable, Tuple, TypeVar
 
+FORMAT = """
+Max seat ID: {0}
+Mid seat ID: {1}
+"""
+
 
 def solve(in_stream):
     seats = [Seat.from_str(line.strip()) for line in in_stream]
     seats.sort(key=lambda seat: seat.id)
-    print(f"Max seat id {seats[-1].id}")
     for prev, next in pairwise(seats):
         if next.id - prev.id == 2:
-            print(f"Mid seat id {prev.id + 1}")
+            return seats[-1].id, prev.id + 1
 
 
 T = TypeVar('T')

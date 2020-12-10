@@ -1,9 +1,14 @@
+FORMAT = """
+Double product: {}
+Triple product: {}
+"""
+
+
 def solve(in_stream):
     data = read(in_stream)
-    a, b = search_double(data, total=2020)
-    print(f"{a} * {b} = {a * b}")
-    a, b, c = search_triple(data, total=2020)
-    print(f"{a} * {b} * {c} = {a * b * c}")
+    da, db = search_double(data, total=2020)
+    ta, tb, tc = search_triple(data, total=2020)
+    return da * db, ta * tb * tc
 
 
 def search_double(candidates: list, total: int):

@@ -1,12 +1,17 @@
-from functools import reduce
+from math import prod
+
+FORMAT = """
+Hits 3:1 {}
+Hits all {}
+"""
 
 
 def solve(in_stream):
     data = [MapLine.from_str(line) for line in in_stream]
-    print("Hits simple", sum_slope(data, 3, 1))
+    simple_hits = sum_slope(data, 3, 1)
     slopes = [(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)]
     slope_hits = [sum_slope(data, *slope) for slope in slopes]
-    print("Hits many", reduce(lambda a, b: a * b, slope_hits))
+    return simple_hits, prod(slope_hits)
 
 
 def sum_slope(map_lines, right: int, down: int) -> int:

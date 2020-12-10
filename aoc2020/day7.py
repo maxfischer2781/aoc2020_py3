@@ -1,14 +1,21 @@
 from typing import Dict, Tuple, List
 import re
 
+FORMAT = """
+Unique Parents: {0}
+Total Children: {1}
+"""
+
 
 def solve(in_stream):
     color_contains = {
         color: contains for color, contains in map(parse_bag_spec, in_stream)
     }
     color_containing = inverse_contains(color_contains)
-    print("Unique parents", unique_containing(color_containing, "shiny gold"))
-    print("Total children", total_contained(color_contains, "shiny gold") - 1)
+    return (
+        unique_containing(color_containing, "shiny gold"),
+        total_contained(color_contains, "shiny gold") - 1,
+    )
 
 
 CONTAINED_PATTERN = re.compile(r"(\d+)\s+(\w+\s+\w+)\s+bag")

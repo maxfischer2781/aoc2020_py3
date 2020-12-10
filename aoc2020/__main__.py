@@ -14,13 +14,12 @@ from . import day8
 from . import day9
 from . import day10
 
-SOLUTIONS = {
-    index: module.solve
-    for index, module in enumerate(
+SOLUTIONS = dict(
+    enumerate(
         (day1, day2, day3, day4, day5, day6, day7, day8, day9, day10),
         start=1,
     )
-}
+)
 
 
 def format_duration(delta: float):
@@ -35,10 +34,11 @@ def run_solution(day: int):
     print(f"[> ### Day {day:3d} ### <]")
     input_path = pathlib.Path(__file__).parent.parent / 'data' / f'day{day}.txt'
     data = io.StringIO(input_path.read_text())
-    solver = SOLUTIONS[day]
+    solver, template = SOLUTIONS[day].solve, SOLUTIONS[day].FORMAT.strip()
     pre = time.time()
-    solver(data)
+    results = solver(data)
     end = time.time()
+    print(template.format(*results))
     print(f"[> Elapsed {format_duration(end-pre)} <]")
 
 

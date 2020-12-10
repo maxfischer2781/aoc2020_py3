@@ -1,10 +1,14 @@
 from typing import NamedTuple
 
+FORMAT = """
+Range count {0}
+Index count {1}
+"""
+
 
 def solve(in_stream):
     data = [PolicyPassword.from_str(line) for line in in_stream]
-    print(f"Range count {sum(pw.in_range() for pw in data)}")
-    print(f"Index count {sum(pw.in_position() for pw in data)}")
+    return sum(pw.in_range() for pw in data), sum(pw.in_position() for pw in data)
 
 
 class PolicyPassword(NamedTuple):

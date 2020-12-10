@@ -1,14 +1,18 @@
 from typing import List
-from functools import reduce
-from operator import mul
+from math import prod
+
+
+FORMAT = """
+Jolt step product: {0}
+Adapter variations: {1}
+"""
 
 
 def solve(in_stream):
     connectors = [int(line) for line in in_stream]
     steps = shortest_steps(connectors)
     step_counts = count(steps)
-    print("Differences", step_counts[0] * step_counts[1])
-    print("Variations", variations(steps))
+    return step_counts[0] * step_counts[1], variations(steps)
 
 
 def shortest_steps(connectors: List[int]):
@@ -48,4 +52,4 @@ def variations(steps: List[int]):
         #      = f(n-1) + f(n-2) + f(n-3) + f(n-4) - f(n-4)
         #      = 2 f(n-1) - f(n-4)
         cache.append(2 * cache[i-1] - cache[i-4])
-    return reduce(mul, map(cache.__getitem__, lengths))
+    return prod(map(cache.__getitem__, lengths))

@@ -3,6 +3,10 @@ from itertools import islice
 from collections import deque
 
 T = TypeVar('T')
+FORMAT = """
+Window sum outlier: {0}
+Window sum min/max: {1}
+"""
 
 
 def solve(in_stream):
@@ -10,7 +14,7 @@ def solve(in_stream):
     outlier = find_nonsum(series, 25)
     print("Window sum outlier:", outlier)
     sum_min, sum_max = find_sum(series, total=outlier)
-    print("Window sum min/max:", sum_min + sum_max, "=", sum_min, "+", sum_max)
+    return outlier, sum_min + sum_max
 
 
 def windowed(items: Iterable[T], size: int) -> Iterable[Tuple[T, ...]]:

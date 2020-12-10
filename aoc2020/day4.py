@@ -1,12 +1,16 @@
 from typing import Iterable, Dict
 
+FORMAT = """
+Num completed {0}
+Num validated {1}
+"""
+
 
 def solve(in_stream):
     data = list(read_passports(in_stream))
     complete_passports = [passport for passport in data if is_complete(passport)]
-    print(f"No compl {len(complete_passports)}")
     valid_passports = [passport for passport in complete_passports if is_valid(passport)]
-    print(f"No valid {len(valid_passports)}")
+    return len(complete_passports), len(valid_passports)
 
 
 def is_complete(passport: Dict[str, str]):

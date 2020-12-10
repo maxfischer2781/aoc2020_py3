@@ -1,14 +1,18 @@
 from typing import NamedTuple, Literal, get_args, List, Tuple, Iterable
 
+FORMAT = """
+Default Accumulated: {}
+Fixed Accumulated: {}
+"""
+
 
 def solve(in_stream):
     instructions = [Instruction.from_str(line) for line in in_stream]
-    print("Default Acc", run_once(instructions)[0])
+    default = run_once(instructions)[0]
     for new_instructions in swap_instructions(instructions):
         total, proper = run_once(new_instructions)
         if proper:
-            print("Fixed Acc", total)
-            break
+            return default, total
 
 
 class Instruction(NamedTuple):
