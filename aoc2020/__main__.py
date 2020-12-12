@@ -13,10 +13,11 @@ from . import day7
 from . import day8
 from . import day9
 from . import day10
+from . import day11
 
 SOLUTIONS = dict(
     enumerate(
-        (day1, day2, day3, day4, day5, day6, day7, day8, day9, day10),
+        (day1, day2, day3, day4, day5, day6, day7, day8, day9, day10, day11),
         start=1,
     )
 )
